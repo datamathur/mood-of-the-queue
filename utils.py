@@ -1,21 +1,31 @@
 import pandas as pd
 from config import *
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 from datetime import datetime, timedelta
+import streamlit as st
+from streamlit_gsheets import GSheetsConnection
+
+def return_connection():
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    return conn
 
 def get_worksheet():
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
-    client = gspread.authorize(creds)
-    sheet = client.open(SHEET_NAME).sheet1
-    return sheet
+    # skey = st.secrets["gsheets"]
+    # scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    # creds = Credentials.from_service_account_info(skey, scopes=scope)
+    # client = gspread.authorize(creds)
+    # sheet = client.open_by_url(SHEET_NAME).sheet1
+    conn = return_connection()
+    df = conn.read()
+    return df
 
-def mood_logger(current_mood, note, sheet):
+def mood_logger(current_mood, note, df):
     datestamp = datetime.now().strftime("%Y-%m-%d")
     timestamp = datetime.now().strftime("%H:%M:%s")
-    new_row = [datestamp, timestamp, MOODS[current_mood], note]
-    sheet.append_row(new_row)
+    conn = return_connection()
+    df.loc[len(df)] = [datestamp, timestamp, MOODS[current_mood], note]
+    conn.update(worksheet='Sheet1', data=df)
 
 def grouping_tool(group, df):
     today = datetime.strftime(datetime.now().date(), "%Y-%m-%d")

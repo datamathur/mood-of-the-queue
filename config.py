@@ -1,4 +1,3 @@
-CREDENTIALS_FILE = "credentials.json"
 SHEET_NAME = "Mood App (Mochi Take Home Assignment)"
 
 MOODS = {

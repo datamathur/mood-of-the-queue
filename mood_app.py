@@ -9,11 +9,11 @@ from utils import *
 import plotly.express as px
 import time
 
-# Importing Google Sheet
-sheet = get_worksheet()
-
 # Page Header
 st.set_page_config(page_title="Mood App", page_icon="🧪")
+
+# Importing Google Sheet
+sheet = get_worksheet()
 
 # Page Title
 st.markdown("<h2 style='text-align: center; padding-bottom: 0em'>Mood of the Queue</h2>", unsafe_allow_html=True)
@@ -62,9 +62,7 @@ st.markdown(
 st.markdown("<h3>Mood Chart 📊</h3>", unsafe_allow_html=True)
 
 ## Read data from google sheet
-data = sheet.get_all_values()
-header = data.pop(0)
-df = pd.DataFrame(data, columns = header)
+df = get_worksheet()
 df["Datestamp"] = pd.to_datetime(df["Datestamp"])
 
 ## Radio button for date group

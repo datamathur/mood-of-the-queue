@@ -2,5 +2,5 @@ numpy
 pandas
 plotly
 streamlit
-gspread
+st-gsheets-connection
 oauth2client
