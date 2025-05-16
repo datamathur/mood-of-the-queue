@@ -14,6 +14,7 @@ A tool to help log the mood of the ticket queue throughout the day, and visualiz
 2. Add the mood log (*datestamp, timestamp, mood, and note*) to the google spreadsheet database.
 3. Mood chart (bar plot) based on date groups (*today, last week, last month, or last year*) which is set on today by default.
 4. Auto-updates the chart after each submission.
+5. Auto-refreshes graph after every 60 seconds.
 
 ## Tech-stack
 - ***Language***: Python

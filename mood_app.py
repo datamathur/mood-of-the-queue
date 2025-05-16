@@ -1,19 +1,12 @@
 # Libraries and Competencies
 import streamlit as st
-from datetime import datetime, timedelta
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import pandas as pd
 from config import *
 from utils import *
-import plotly.express as px
 import time
 
 # Page Header
 st.set_page_config(page_title="Mood App", page_icon="🧪")
-
-# Importing Google Sheet
-sheet = get_worksheet()
+st.markdown(HIDE_STREAMLIT_STYLE, unsafe_allow_html=True)
 
 # Page Title
 st.markdown("<h2 style='text-align: center; padding-bottom: 0em'>Mood of the Queue</h2>", unsafe_allow_html=True)
@@ -23,18 +16,17 @@ st.markdown("<h2 style='text-align: center; padding-top: 0.2em; padding-bottom: 
 st.markdown("<h3>Log Your Mood 📝</h3>", unsafe_allow_html=True)
 
 ## User Entry
-current_mood = st.selectbox("✨ Select a mood *", list(MOODS.keys()), index=None, placeholder=CURRENT_MOOD_PLACEHOLDER, key='mood_dropdown') # Dropdown
-note = st.text_input("📜 Add a short note", placeholder=NOTE_PLACEHOLDER, key='mood_note') # Optional Note
+st.markdown("✨ Select a mood *")
+current_mood = st.selectbox(CURRENT_MOOD_PLACEHOLDER, list(MOODS.keys()), index=None, key='dropdown') # Dropdown
+st.markdown("")
+st.markdown("📜 Add a short note")
+note = st.text_input(NOTE_PLACEHOLDER, key='note') # Optional Note
 
 ## Submit Button
 st.markdown(
     """
     <style>
-    .stButton {
-        display: flex;
-        justify-content: center;
-        padding: "0em,0em,0em,0em";
-    }
+        .stButton {display: flex; justify-content: center; padding: "0em,0em,0em,0em";}
     </style>
     """,
     unsafe_allow_html=True
@@ -43,6 +35,7 @@ if st.button("Submit"):
     if current_mood==None:
         st.error("Choose a mood")
     else:
+        sheet = get_worksheet()
         mood_logger(current_mood, note, sheet)
         st.success("Mood logged successfully!")
         time.sleep(2)
@@ -61,25 +54,9 @@ st.markdown(
 # Mood Chart
 st.markdown("<h3>Mood Chart 📊</h3>", unsafe_allow_html=True)
 
-## Read data from google sheet
-df = get_worksheet()
-df["Datestamp"] = pd.to_datetime(df["Datestamp"])
-
 ## Radio button for date group
 group = st.radio(label = "📅 Select date group", options=GROUPS, horizontal=True)
-df_group = grouping_tool(group, df)
-
-if not df_group.empty:
-    ## Display graph
-    mood_counts = graph_tools(df_group) # Prepare data for graph
-    fig = px.bar(mood_counts, x='mood', y='count', color='count',
-                 title=f"Mood Frequency for {group}", text='count', 
-                 color_continuous_scale=px.colors.sequential.RdBu) 
-    fig.update_layout(xaxis_title='Mood', yaxis_title='Count')
-    st.plotly_chart(fig, use_container_width=True) # Display graph
-else:
-    ## Display error message
-    st.info("No moods logged for today yet.")
+graph_tools(group)
 
 # Footer
 st.markdown(
