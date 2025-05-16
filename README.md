@@ -1,6 +1,12 @@
 # Mood of the Queue
 A tool to help log the mood of the ticket queue throughout the day, and visualize the emotional trend.
 
+### Deliverables
+- ***[Hosted App](https://mood-of-the-queue-um.streamlit.app/)***
+- ***[GitHub Repo](https://github.com/datamathur/mood-of-the-queue)***
+- ***[Google Sheets](https://docs.google.com/spreadsheets/d/1bLnA-wFF987cenKfLPaCXHL6BK-fVd7Iht_Nypc-ATM/edit?usp=drive_link)***
+- ***[README File](https://github.com/datamathur/mood-of-the-queue/blob/main/README.md)***
+
 ## Features
 1. Logs the mood of users:
    1. Select mood from dropdown of **7 moods** (*😐 Neutral, 😊 Happy, 😄 Excited, 😴 Tired, 😰 Stressed, 😠 Angry, 😞 Sad*)
