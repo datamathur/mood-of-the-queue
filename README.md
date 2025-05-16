@@ -21,21 +21,6 @@ A tool to help log the mood of the ticket queue throughout the day, and visualiz
 - ***Storage/Database***: [Google Sheets](https://docs.google.com/spreadsheets/d/1bLnA-wFF987cenKfLPaCXHL6BK-fVd7Iht_Nypc-ATM/edit?usp=drive_link)
 - ***Visualization***: Plotly
 
-## Setup Instructions
-1. Clone repository
-```
-git clone https://github.com/datamathur/mood-of-the-queue.git
-cd mood-of-the-queue
-```
-2. Install Requirements
-```
-pip install -r requirements.txt
-```
-3. Run the App
-```
-streamlit run mood_app.py
-```
-
 ## Thought Process
 
 ### Approach
